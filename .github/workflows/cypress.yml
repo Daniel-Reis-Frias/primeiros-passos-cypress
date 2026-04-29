@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   cypress-run:
     name: Run Cypress Tests
@@ -20,17 +23,17 @@ jobs:
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: 24
 
       - name: 📦 Instalar dependências
-        run: npm ci
+        run: npm install
 
       - name: 🧪 Executar testes Cypress
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
           headless: true
+          install: false
 
       - name: 📊 Fazer upload dos screenshots (em caso de falha)
         uses: actions/upload-artifact@v4
